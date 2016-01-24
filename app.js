@@ -1,25 +1,38 @@
-var todomvc = angular.module('todomvc', ['firebase']);
+var asanamvc = angular.module('asanamvc', ['firebase']);
 
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $firebase) {
+asanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
     var fireRef = new Firebase('https://asana-tracker.firebaseio.com/');
-    $scope.todos = $firebase(fireRef).$asArray();
-    $scope.newTodo = '';
+    $scope.entries = $firebase(fireRef).$asArray();
+    $scope.newEntry = '';
+    $scope.newDate = new Date();
 
-    $scope.addTodo = function(){
-        var newTodo = $scope.newTodo.trim();
-        if (!newTodo.length) {
+    $scope.categories =
+    [
+        "Yoga With Adriene",
+        "Cody Workout",
+        "Freestyle"
+    ];  
+
+    $scope.addEntry = function(){
+        var newEntryTitle = $scope.newEntry.trim();
+        if (!newEntryTitle.length) {
             return;
         }
+        var newEntryDate = $scope.newDate.toString();
+        var newEntryCategory = $scope.newCategory;
+
         // push to firebase
-        $scope.todos.$add({
-            title: newTodo,
+        $scope.entries.$add({
+            title: newEntryTitle,
+            date: newEntryDate,
+            category: newEntryCategory,
             completed: false
         });
-        $scope.newTodo = '';
+        $scope.newEntry = '';
     };
 
-    $scope.removeTodo = function(todo){
-        $scope.todos.$remove(todo);
+    $scope.removeEntry = function(entry){
+        $scope.entries.$remove(entry);
     };
 
 });
