@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="asanamvc" data-framework="firebase">
+<html lang="en" ng-app="todosanamvc" data-framework="firebase">
     <head>
         <meta charset="utf-8">
         <title>asana &amp; tracker</title>
@@ -8,8 +8,8 @@
         <style>[ng-cloak] { display: none; }</style>
     </head>
     <body>
-    <h1 class="title">asana tracker</h1>
-    <h3 class="subtitle">"if you have a practice - practice it"</h3>
+    <h1 class="title"><b>todosana</b></h1>
+    <h3 class="subtitle">a todo and tracking app for <b>your</b> practices</h3>
 
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
@@ -30,26 +30,24 @@
                         <tr>
                             <td><label for="dateInput">date:</label></td>
                             <td><input class="inputDate" type="date" id="dateInput" name="input" ng-model="newDate"
-                                        placeholder="yyyy-MM-dd" required />
-                            <div role="alert">
-                            <span class="error" ng-show="myForm.input.$error.required">
-                             Required!</span>
-                            <span class="error" ng-show="myForm.input.$error.date">
-                             Not a valid date!</span>
-                            </div></td>
+                                        placeholder="yyyy-MM-dd" required />                    
+                                        <div role="alert"> <!-- this doesn't work now... -->
+                                        <span class="error" ng-show="myForm.input.$error.required">
+                                            Required!</span>
+                                        <span class="error" ng-show="myForm.input.$error.date">
+                                            Not a valid date!</span>
+                                        </div>
+                            </td>
                         </tr>
-
                         <tr>
                             <td><label for="categoryInput">category:</label></td>
                             <td><select class="btn-info" ng-options="value for value in categories" ng-model="newCategory"></select></td>
                         </tr>
-
                         <tr>
                             <td><label>entry:</label></td>
                             <td><input class="form-control inputTitle" placeholder="what did you do today?" ng-model="newEntry" autofocus></td>
                         </tr>
                     </table>
-
                     <button class="btn">add entry</button>
                 </form>
             </header>

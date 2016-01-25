@@ -1,7 +1,7 @@
-var asanamvc = angular.module('asanamvc', ['firebase']);
+var todosanamvc = angular.module('todosanamvc', ['firebase']);
 
-asanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
-    var fireRef = new Firebase('https://asana-tracker.firebaseio.com/');
+todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
+    var fireRef = new Firebase('https://todosana.firebaseio.com/');
     $scope.entries = $firebase(fireRef).$asArray();
     $scope.newEntry = '';
     $scope.newDate = new Date();
