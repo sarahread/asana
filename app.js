@@ -9,26 +9,36 @@ todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
     $scope.categories =
     [
         "Yoga With Adriene",
-        "Cody Workout",
-        "Freestyle"
-    ];  
+        "Cody App Video",
+        "PIYO",
+        "Free practice"
+    ];
 
     $scope.addEntry = function(){
-        var newEntryTitle = $scope.newEntry.trim();
-        if (!newEntryTitle.length) {
-            return;
-        }
-        var newEntryDate = $scope.newDate.toString();
-        var newEntryCategory = $scope.newCategory;
+      var newEntryTitle = $scope.newEntry.trim();
+      if (!newEntryTitle.length) {
+          return;
+      }
+      var newEntryDate = $scope.newDate.toString();
+      var newEntryCategory = $scope.newCategory;
 
-        // push to firebase
-        $scope.entries.$add({
-            title: newEntryTitle,
-            date: newEntryDate,
-            category: newEntryCategory,
-            completed: false
-        });
-        $scope.newEntry = '';
+      // push to firebase
+      // $scope.entries.$add({
+      //     title: newEntryTitle,
+      //     date: newEntryDate,
+      //     category: newEntryCategory,
+      //     completed: false
+      // });
+      var item = {
+          title: newEntryTitle,
+          date: newEntryDate,
+          category: newEntryCategory,
+          completed: false
+      }
+
+      var record = $scope.entries.$add(item);
+
+      $scope.newEntry = '';
     };
 
     $scope.removeEntry = function(entry){

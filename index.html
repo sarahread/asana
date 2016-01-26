@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="todosanamvc" data-framework="firebase">
-    <head>
-        <meta charset="utf-8">
+  <head>
+      <meta charset="utf-8">
         <title>asana &amp; tracker</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="style.css">
@@ -17,54 +17,58 @@
     <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+
     <script src="app.js"></script>
 
     <!-- the app -->
     <div class="container" ng-controller="EntryCtrl">
-        <section class="row">
-            <header>
-                <h3>log a workout:</h3>
+      <section class="row">
+        <header>
+          <h3>log a workout:</h3>
+          <form ng-submit="addEntry()">
+            <table style="width:100%">
+              <tr>
+                <td><label for="dateInput">date:</label></td>
+                <td><input class="inputDate" type="date" id="dateInput" name="input" ng-model="newDate"
+                  placeholder="yyyy-MM-dd" required />
+                  <div role="alert"> <!-- this doesn't work now... -->
+                    <span class="error" ng-show="myForm.input.$error.required">Required!</span>
+                    <span class="error" ng-show="myForm.input.$error.date">Not a valid date!</span>
+                  </div>
+                </td>
+              </tr>
 
-                <form ng-submit="addEntry()">
-                    <table style="width:100%">
-                        <tr>
-                            <td><label for="dateInput">date:</label></td>
-                            <td><input class="inputDate" type="date" id="dateInput" name="input" ng-model="newDate"
-                                        placeholder="yyyy-MM-dd" required />                    
-                                        <div role="alert"> <!-- this doesn't work now... -->
-                                        <span class="error" ng-show="myForm.input.$error.required">
-                                            Required!</span>
-                                        <span class="error" ng-show="myForm.input.$error.date">
-                                            Not a valid date!</span>
-                                        </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label for="categoryInput">category:</label></td>
-                            <td><select class="btn-info" ng-options="value for value in categories" ng-model="newCategory"></select></td>
-                        </tr>
-                        <tr>
-                            <td><label>entry:</label></td>
-                            <td><input class="form-control inputTitle" placeholder="what did you do today?" ng-model="newEntry" autofocus></td>
-                        </tr>
-                    </table>
-                    <button class="btn">add entry</button>
-                </form>
-            </header>
-            <section>
-                <h3>past workouts:</h3>
-                <div class="list-group">
-                    <div ng-repeat="entry in entries" class="list-group-item">
-                        <div class="view">
-                            <label class="entry date">{{entry.date | date:'shortDate'}}</label>
-                            <label class="entry category">{{entry.category}}</label>
-                            <label class="entry title">{{entry.title}}</label>
-                            <button class="entry btn pull-right" ng-click="removeEntry(entry)">x</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+              <tr>
+                <td><label for="categoryInput">category:</label></td>
+                <td><select class="btn-info" ng-options="value for value in categories" ng-model="newCategory"></select></td>
+              </tr>
+
+             <tr>
+                <td><label>entry:</label></td>
+                <td><input class="form-control inputTitle" placeholder="what did you do today?" ng-model="newEntry" autofocus></td>
+              </tr>
+
+            </table>
+
+            <button class="btn">add entry</button>
+
+          </form>
+        </header>
+
+        <section>
+          <h3>past workouts:</h3>
+          <div class="list-group">
+            <div ng-repeat="entry in entries" class="list-group-item">
+              <div class="view">
+                <label class="entry date">{{entry.date | date:'shortDate'}}</label>
+                <label class="entry category">{{entry.category}}</label>
+                <label class="entry title">{{entry.title}}</label>
+                <button class="entry btn pull-right" ng-click="removeEntry(entry)">x</button>
+              </div>
+            </div>
+          </div>
         </section>
+      </section>
     </div>
-</body>
+  </body>
 </html>
