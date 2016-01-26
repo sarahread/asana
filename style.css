@@ -56,4 +56,11 @@
 .entry.btn { 
 	color: #FFF;
 	background-color: #5bc0de;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.entry.delete.btn { 
+  color: #FFF;
+  background-color: #FF0000;
 }

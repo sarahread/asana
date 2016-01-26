@@ -22,13 +22,6 @@ todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
       var newEntryDate = $scope.newDate.toString();
       var newEntryCategory = $scope.newCategory;
 
-      // push to firebase
-      // $scope.entries.$add({
-      //     title: newEntryTitle,
-      //     date: newEntryDate,
-      //     category: newEntryCategory,
-      //     completed: false
-      // });
       var item = {
           title: newEntryTitle,
           date: newEntryDate,
@@ -36,13 +29,20 @@ todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
           completed: false
       }
 
-      var record = $scope.entries.$add(item);
+      // set priority (days from today)
+      item.$priority = new Date().getTime() - $scope.newDate.getTime();
+      $scope.entries.$add(item);
 
       $scope.newEntry = '';
     };
 
     $scope.removeEntry = function(entry){
-        $scope.entries.$remove(entry);
+      $scope.entries.$remove(entry);
+    };
+
+    $scope.completeEntry = function(entry){
+      entry.completed = true;
+      $scope.entries.$save(entry);
     };
 
 });

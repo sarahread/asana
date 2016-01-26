@@ -37,36 +37,47 @@
                   </div>
                 </td>
               </tr>
-
               <tr>
                 <td><label for="categoryInput">category:</label></td>
                 <td><select class="btn-info" ng-options="value for value in categories" ng-model="newCategory"></select></td>
               </tr>
-
              <tr>
                 <td><label>entry:</label></td>
                 <td><input class="form-control inputTitle" placeholder="what did you do today?" ng-model="newEntry" autofocus></td>
               </tr>
-
             </table>
-
             <button class="btn">add entry</button>
 
           </form>
         </header>
 
         <section>
-          <h3>past workouts:</h3>
+          <h3>todo:</h3>
           <div class="list-group">
-            <div ng-repeat="entry in entries" class="list-group-item">
+            <div ng-repeat="entry in entries | filter: { completed: 'false' } | orderBy: $priority" class="list-group-item">
               <div class="view">
-                <label class="entry date">{{entry.date | date:'shortDate'}}</label>
+                <label class="entry date">{{entry.date | date:'medium'}}</label>
                 <label class="entry category">{{entry.category}}</label>
                 <label class="entry title">{{entry.title}}</label>
-                <button class="entry btn pull-right" ng-click="removeEntry(entry)">x</button>
+                <button class="entry delete btn pull-right" ng-click="removeEntry(entry)">x</button>
+                <button class="entry btn pull-right" ng-click="completeEntry(entry)">&#10004;</button>
               </div>
             </div>
           </div>
+          
+          <h3>past workouts:</h3>
+          <div class="list-group">
+            <div ng-repeat="entry in entries | filter: { completed: 'true' } | orderBy: $priority" class="list-group-item">
+              <div class="view">
+                <label class="entry date">{{entry.date | date:'medium'}}</label>
+                <label class="entry category">{{entry.category}}</label>
+                <label class="entry title">{{entry.title}}</label>
+                <label class="entry title">{{entry.$priority}}</label>
+                <button class="entry delete btn pull-right" ng-click="removeEntry(entry)">x</button>
+              </div>
+            </div>
+          </div>
+
         </section>
       </section>
     </div>
