@@ -1,7 +1,18 @@
-var todosanamvc = angular.module('todosanamvc', ['firebase']);
+angular.module('todosanamvc', ['firebase'])
 
-todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
+.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
     var fireRef = new Firebase('https://todosana.firebaseio.com/');
+
+    fireRef.authWithOAuthPopup("google", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+      }
+    });
+
+    fireRef.onAuth(authDataCallback);
+
     $scope.entries = $firebase(fireRef).$asArray();
     $scope.newEntry = '';
     $scope.newDate = new Date();
@@ -13,25 +24,35 @@ todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
         "PIYO",
         "Free practice"
     ];
+    $scope.newCategory = $scope.categories[0];
 
-    $scope.addEntry = function(){
+    $scope.addEntry = function(markDone){
       var newEntryTitle = $scope.newEntry.trim();
       if (!newEntryTitle.length) {
           return;
       }
-      var newEntryDate = $scope.newDate.toString();
+
+      var newEntryDuration = null;
+      if($scope.newDuration)
+        newEntryDuration = parseInt($scope.newDuration.trim());
+
+      var newEntryDate = $scope.newDate.getTime();
       var newEntryCategory = $scope.newCategory;
 
-      var item = {
+      var entry = {
           title: newEntryTitle,
           date: newEntryDate,
           category: newEntryCategory,
-          completed: false
+          duration: newEntryDuration,
+          completed: markDone
       }
 
       // set priority (days from today)
-      item.$priority = new Date().getTime() - $scope.newDate.getTime();
-      $scope.entries.$add(item);
+      entry.$priority = newEntryDate - new Date().getTime();
+
+      console.log(entry.$priority);
+
+      $scope.entries.$add(entry);
 
       $scope.newEntry = '';
     };
@@ -41,8 +62,20 @@ todosanamvc.controller('EntryCtrl', function EntryCtrl($scope, $firebase) {
     };
 
     $scope.completeEntry = function(entry){
+      // If item priority is negative it is in the future so don't add it.. 
+      // Need better solution
       entry.completed = true;
       $scope.entries.$save(entry);
+
     };
+
+    // Create a callback which logs the current auth state
+    function authDataCallback(authData) {
+      if (authData) {
+        console.log("User " + authData.uid + " is logged in with " + authData.provider);
+      } else {
+        console.log("User is logged out");
+      }
+    }
 
 });

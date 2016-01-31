@@ -15,3 +15,10 @@ basics:
 harder: 
 - autogenerate items on a schedule
   - drag to complete like trello
+
+
+TODO
+
+- if getTime delta is negative then error if you try to mark complete, can't complete in future
+(makes filtering logic easier)
+- nest data under user object

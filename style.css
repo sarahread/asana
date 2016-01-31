@@ -53,6 +53,13 @@
   color: #CCCCEE;
 }
 
+.entry.duration {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 10px;
+  color: #CCCCEE;
+}
+
 .entry.btn { 
 	color: #FFF;
 	background-color: #5bc0de;
@@ -61,6 +68,8 @@
 }
 
 .entry.delete.btn { 
-  color: #FFF;
-  background-color: #FF0000;
-}
+  color: #CCCCCC;
+  background-color: #FFFFFF;
+  border-style: solid;
+  border-color: #EEEEEE;
+};
