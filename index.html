@@ -37,7 +37,7 @@
               </tr>
               <tr>
                 <td><label for="categoryInput">category:</label></td>
-                <td><select class="btn-info" ng-options="value for value in categories" ng-model="newCategory"></select></td>
+                <td><select ng-options="value for value in categories" ng-model="newCategory"></select></td>
               </tr>
               <tr>
                 <td><label>entry:</label></td>
@@ -58,7 +58,7 @@
           <div class="list-group">
             <div ng-repeat="entry in entries | filter: { completed: 'false' } | orderBy: $priority" class="list-group-item">
               <div class="view">
-                <label class="entry date">{{entry.date | date:'short'}}</label>
+                <label class="entry date">{{entry.date |  date:'MM/dd/yyyy' }}</label>
                 <label class="entry category">{{entry.category}}</label>
                 <label class="entry title">{{entry.title}}</label>
 
@@ -73,7 +73,7 @@
           <div class="list-group">
             <div ng-repeat="entry in entries | filter: { completed: 'true' } | orderBy: $priority" class="list-group-item">
               <div class="view">
-                <label class="entry date">{{entry.date | date:'short'}}</label>
+                <label class="entry date">{{entry.date |  date:'MM/dd/yyyy' }}</label>
                 <label class="entry category">{{entry.category}}</label>
                 <label class="entry title">{{entry.title}}</label>
                 <button class="entry delete btn pull-right" ng-click="removeEntry(entry)">x</button>

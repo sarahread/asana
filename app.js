@@ -11,7 +11,21 @@ angular.module('todosanamvc', ['firebase'])
       }
     });
 
+    // watch login status
     fireRef.onAuth(authDataCallback);
+
+    var isNewUser = true;
+
+    fireRef.onAuth(function(authData) {
+      if (authData && isNewUser) {
+        // save the user's profile into the database so we can list users,
+        // use them in Security and Firebase Rules, and show profiles
+        fireRef.child("users").child(authData.uid).set({
+          provider: authData.provider,
+          name: authData.google.displayName
+        });
+      }
+    });
 
     $scope.entries = $firebase(fireRef).$asArray();
     $scope.newEntry = '';
